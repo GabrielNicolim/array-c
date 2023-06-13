@@ -11,10 +11,10 @@ int mat[9999][9999], lines, columns;
 void init_array();
 void init_menu();
 int navegate_menu(int start, int end, int p);
-void show_mat();
 void swapRowForLine();
 void swapRowForColumn();
 void swapPrimaryForSecondary();
+void verify_symmetric();
 void close();
 void loading();
 void textcolor(int color);
@@ -42,10 +42,35 @@ void init_array()
 		system("cls");
 
 		for(int j = 0; j < columns; j++) {
-			gotoxy(30, 8 + (j * 2)); printf("Elemento [%d][%d]: ", i, j);
+			gotoxy(30, 8 + j); printf("Elemento [%d][%d]: ", i, j);
 			scanf("%d", &mat[i][j]);
 		}
 	}
+}
+
+void show_mat() {
+    system("cls");
+
+    for (int i = 0; i < lines; i++) {
+        gotoxy(30, 8 + i); 
+        printf("| ");
+        for (int j = 0; j < columns; j++) {
+            printf("%d ", mat[i][j]);
+        }
+        printf("|\n");
+    }
+
+    int input;
+
+    cursor(0);
+
+    do {
+    	fflush(stdin);
+    	
+        input = getch();
+    } while (input != 13);
+
+    return;
 }
 
 void init_menu()
@@ -60,9 +85,9 @@ void init_menu()
 	    gotoxy(30, 12); printf("Trocar os elementos da coluna X pela coluna Y");
 	    gotoxy(30, 14); printf("Troque os elementos da diagonal principal com a diagonal secundária");
 	    gotoxy(30, 16); printf("Verificar se uma matriz é simétrica");
-	    gotoxy(30, 18); printf("Verificar se a matriz é um quadrado mágico");
-	    gotoxy(30, 20); printf("Verificar se a matriz é quadrado latino");
-	    gotoxy(30, 22); printf("Verificar se a matriz é matriz de permutação");
+	    gotoxy(30, 18); printf("Verificar se uma matriz é um quadrado mágico");
+	    gotoxy(30, 20); printf("Verificar se uma matriz é quadrado latino");
+	    gotoxy(30, 22); printf("Verificar se uma matriz é matriz de permutação");
 	    gotoxy(30, 24); printf("Sair");
 
 		option = navegate_menu(8, 24, 28);
@@ -83,6 +108,7 @@ void init_menu()
 	        	swapPrimaryForSecondary();
 	            break;
 	        case 4:
+	        	verify_symmetric();
 	            break;
 	        case 5:
 	            break;
@@ -94,9 +120,11 @@ void init_menu()
 	        	close();
 	            break;
 	    }	
+	    
 	} while(option != 8);
 
     return;
+    
 }
 
 int navegate_menu(int start, int end, int p)
@@ -138,32 +166,6 @@ int navegate_menu(int start, int end, int p)
                 break;
         }
     } while (input != 13);
-}
-
-void show_mat()
-{
-    system("cls");
-
-    for (int i = 0; i < lines; i++) {
-        gotoxy(30, 8 + i); 
-        printf("| ");
-        for (int j = 0; j < columns; j++) {
-            printf("%d ", mat[i][j]);
-        }
-        printf("|\n");
-    }
-
-    cursor(0);
-
-    int input;
-
-    do {
-    	fflush(stdin);
-    	
-        input = getch();
-    } while (input != 13);
-
-    return;
 }
 
 void swapRowForLine()
@@ -215,6 +217,41 @@ void swapPrimaryForSecondary()
 	loading();
 
 	return;
+}
+
+int is_symmetric (int mat[][9999], int lines, int columns) {
+	for (int i = 0; i < lines; i++) {
+        for (int j = 0; j < columns; j++) {
+            if (mat[i][j] != mat[j][i]) {
+                return 0;
+            } 
+        }
+    }
+    
+    return 1;
+}
+
+void verify_symmetric() 
+{
+	int symmetric = is_symmetric(mat, lines, columns);
+	
+	system("cls");
+
+    if (symmetric == 1) {
+        gotoxy(30, 8); printf("A matriz é simétrica.");
+    } else {
+        gotoxy(30, 8); printf("A matriz não é simétrica.");
+    }
+
+    int input;
+    cursor(0);
+
+    do {
+        fflush(stdin);
+        input = getch();
+    } while (input != 13);
+
+    return;
 }
 
 void close()
