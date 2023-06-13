@@ -13,7 +13,6 @@ void textcolor(int color);
 void gotoxy(int x, int y);
 void cursor (int x);
 
-
 int main() {
 	setlocale(LC_ALL, "Portuguese");
 
@@ -34,9 +33,9 @@ void init_menu()
     gotoxy(30, 22); printf("Verificar se uma matriz é matriz de permutação");
     gotoxy(30, 24); printf("Sair");
 
-    int escolha = navegate_menu(8, 24, 28);
+    int option = navegate_menu(8, 24, 28);
 
-    switch(escolha){
+    switch(option){
         case 0:
             break;
         case 1:
@@ -69,7 +68,7 @@ int navegate_menu(int start, int end, int p)
     int input;
 
     do{
-        gotoxy(p,aux); printf("%c", 62);	//posição inicial da seta
+        gotoxy(p,aux); printf("%c", 62); //posição inicial da seta
 
         fflush(stdin);
 
@@ -97,7 +96,7 @@ int navegate_menu(int start, int end, int p)
                 return (aux - start)/2; // Retorna o valor da opção seleciona => inicia em 0
                 break;
         }
-    }while(1);
+    }while(input != 13);
 }
 
 void close() // Finaliza a execução do programa
@@ -120,7 +119,7 @@ void textcolor(int color) // Define a cor do texto
       (csbi.wAttributes & 0xf0) | color);
 }
 
-void gotoxy(int x, int y)   // Move o cursor para a coluna e linha desejada
+void gotoxy(int x, int y) // Move o cursor para a coluna e linha desejada
 {
     COORD c;
     c.X = x - 1;
