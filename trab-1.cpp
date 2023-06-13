@@ -11,6 +11,8 @@ int mat[9999][9999], lines, columns;
 void init_array();
 void init_menu();
 int navegate_menu(int start, int end, int p);
+void swapRowForLine();
+void swapRowForColumn();
 void close();
 void textcolor(int color);
 void gotoxy(int x, int y);
@@ -70,30 +72,34 @@ void show_mat() {
 
 void init_menu()
 {
-	system("cls");
-
-    gotoxy(30, 8);  printf("Mostrar os elementos");
-    gotoxy(30, 10); printf("Trocar os elementos da linha X pela linha Y");
-    gotoxy(30, 12); printf("Trocar os elementos da coluna X pela coluna Y");
-    gotoxy(30, 14); printf("Troque os elementos da diagonal principal com a diagonal secundária");
-    gotoxy(30, 16); printf("Verificar se uma matriz é simétrica");
-    gotoxy(30, 18); printf("Verificar se uma matriz é um quadrado mágico");
-    gotoxy(30, 20); printf("Verificar se uma matriz é quadrado latino");
-    gotoxy(30, 22); printf("Verificar se uma matriz é matriz de permutação");
-    gotoxy(30, 24); printf("Sair");
-
 	int option;
 
 	do {
+		system("cls");
+
+	    gotoxy(30, 8);  printf("Mostrar os elementos");
+	    gotoxy(30, 10); printf("Trocar os elementos da linha X pela linha Y");
+	    gotoxy(30, 12); printf("Trocar os elementos da coluna X pela coluna Y");
+	    gotoxy(30, 14); printf("Troque os elementos da diagonal principal com a diagonal secundï¿½ria");
+	    gotoxy(30, 16); printf("Verificar se uma matriz ï¿½ simï¿½trica");
+	    gotoxy(30, 18); printf("Verificar se uma matriz ï¿½ um quadrado mï¿½gico");
+	    gotoxy(30, 20); printf("Verificar se uma matriz ï¿½ quadrado latino");
+	    gotoxy(30, 22); printf("Verificar se uma matriz ï¿½ matriz de permutaï¿½ï¿½o");
+	    gotoxy(30, 24); printf("Sair");
+
 		option = navegate_menu(8, 24, 28);
 	
+		cursor(1);
+
 	    switch(option) {
 	        case 0:
                  show_mat();
 	            break;
 	        case 1:
+	        	swapRowForLine();
 	            break;
 	        case 2:
+	        	swapRowForColumn();
 	            break;
 	        case 3:
 	            break;
@@ -112,7 +118,6 @@ void init_menu()
 	} while(option != 8);
 
     return;
-}
 
 int navegate_menu(int start, int end, int p)
 {
@@ -121,8 +126,8 @@ int navegate_menu(int start, int end, int p)
     int aux = start;
     int input;
 
-    do {
-        gotoxy(p,aux); printf("%c", 62); //posição inicial da seta
+    do{
+        gotoxy(p,aux); printf("%c", 62);
 
         fflush(stdin);
 
@@ -131,7 +136,7 @@ int navegate_menu(int start, int end, int p)
         gotoxy(p,aux); printf(" ");
 
         switch(input){
-            case 72: // Seta para cima
+            case 72:
                 aux -= 2;
 
                 if(aux < start) aux  = end;
@@ -139,7 +144,7 @@ int navegate_menu(int start, int end, int p)
                 gotoxy(p,aux);printf("%c", 62);
                 break;
 
-            case 80: // Seta para baixo
+            case 80:
                 aux+=2;
 
                 if(aux > end) aux = start;
@@ -147,24 +152,68 @@ int navegate_menu(int start, int end, int p)
                 gotoxy(p,aux);printf("%c", 62);
                 break;
             case 13:
-                return (aux - start)/2; // Retorna o valor da opção seleciona => inicia em 0
+                return (aux - start)/2;
                 break;
         }
     } while(input != 13);
 }
 
-void close() // Finaliza a execução do programa
+void swapRowForLine()
+{
+	int x, y;
+
+	system("cls");
+
+	gotoxy(30, 8); printf("Digite a linha a ser trocada: ");
+	scanf("%d", &x);
+	gotoxy(30, 10); printf("Digite a linha a ser trocada: ");
+	scanf("%d", &y);
+
+	int aux;
+	for(int i = 0; i < columns; i ++) {
+		aux = mat[x][i];
+		mat[x][i] = mat[y][i];
+		mat[y][i] = aux;
+	}
+
+	return;
+}
+
+void swapRowForColumn()
+{
+	int x, y;
+
+	system("cls");
+
+	gotoxy(30, 8); printf("Digite a coluna a ser trocada: ");
+	scanf("%d", &x);
+	gotoxy(30, 10); printf("Digite a coluna a ser trocada: ");
+	scanf("%d", &y);
+
+	int aux;
+	for(int i = 0; i < lines; i ++) {
+		aux = mat[i][x];
+		mat[i][x] = mat[i][y];
+		mat[i][y] = aux;
+	}
+
+	return;
+}
+
+void close()
 {
 	system("cls");
 
-	gotoxy(45, 15); printf("Obrigado por utilizar nosso programa!");
+	cursor(0);
+
+	gotoxy(42, 15); printf("Obrigado por utilizar nosso programa!");
 	
-	textcolor(0); gotoxy(80, 34); // Esconde mensagem de encerramento
+	textcolor(0); gotoxy(80, 34);
 	
 	exit(1);
 }
 
-void textcolor(int color) // Define a cor do texto
+void textcolor(int color)
 {
    CONSOLE_SCREEN_BUFFER_INFO csbi;
 
@@ -173,7 +222,7 @@ void textcolor(int color) // Define a cor do texto
       (csbi.wAttributes & 0xf0) | color);
 }
 
-void gotoxy(int x, int y) // Move o cursor para a coluna e linha desejada
+void gotoxy(int x, int y)
 {
     COORD c;
     c.X = x - 1;
@@ -181,7 +230,7 @@ void gotoxy(int x, int y) // Move o cursor para a coluna e linha desejada
     SetConsoleCursorPosition (GetStdHandle(STD_OUTPUT_HANDLE), c);
 }
 
-void cursor (int show) // Define se o cursor ira aparecer sim(1) ou não(0)
+void cursor (int show)
 {
     switch (show) {
         case 0: {
