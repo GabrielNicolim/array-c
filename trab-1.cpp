@@ -13,7 +13,9 @@ void init_menu();
 int navegate_menu(int start, int end, int p);
 void swapRowForLine();
 void swapRowForColumn();
+void swapPrimaryForSecondary();
 void close();
+void loading();
 void textcolor(int color);
 void gotoxy(int x, int y);
 void cursor (int x);
@@ -30,10 +32,10 @@ int main() {
 
 void init_array()
 {
-	gotoxy(30, 8); printf("Digite quantas linhas sua matriz deve ter: ");
+	gotoxy(30, 8); printf("Digite qual ordem sua matriz deve ter: ");
 	scanf("%d", &lines);
-	gotoxy(30, 9); printf("Digite quantas colunas sua matriz deve ter: ");
-	scanf("%d", &columns);
+	
+	columns = lines;
 
 	for(int i = 0; i < lines; i++) {
 		system("cls");
@@ -102,6 +104,7 @@ void init_menu()
 	        	swapRowForColumn();
 	            break;
 	        case 3:
+	        	swapPrimaryForSecondary();
 	            break;
 	        case 4:
 	            break;
@@ -127,7 +130,7 @@ int navegate_menu(int start, int end, int p)
     int input;
 
     do{
-        gotoxy(p,aux); printf("%c", 62);
+        gotoxy(p, aux); printf("%c", 62);
 
         fflush(stdin);
 
@@ -141,21 +144,23 @@ int navegate_menu(int start, int end, int p)
 
                 if(aux < start) aux  = end;
 
-                gotoxy(p,aux);printf("%c", 62);
-                break;
+                gotoxy(p, aux); printf("%c", 62);
 
+                break;
             case 80:
                 aux+=2;
 
                 if(aux > end) aux = start;
 
-                gotoxy(p,aux);printf("%c", 62);
+                gotoxy(p,aux); printf("%c", 62);
+
                 break;
             case 13:
-                return (aux - start)/2;
+                return (aux - start) / 2;
+
                 break;
         }
-    } while(input != 13);
+    } while (input != 13);
 }
 
 void swapRowForLine()
@@ -200,17 +205,39 @@ void swapRowForColumn()
 	return;
 }
 
+void swapPrimaryForSecondary()
+{
+	int aux;
+
+	loading();
+
+	return;
+}
+
 void close()
 {
 	system("cls");
 
 	cursor(0);
 
-	gotoxy(42, 15); printf("Obrigado por utilizar nosso programa!");
+	gotoxy(43, 12); printf("Obrigado por utilizar nosso programa!");
 	
 	textcolor(0); gotoxy(80, 34);
 	
 	exit(1);
+}
+
+void loading()
+{
+	system("cls");
+	
+	cursor(0);
+
+	gotoxy(60, 15); 
+	for(int i = 0; i < 3; i++) {
+		printf(". ");
+		Sleep(500);
+	}
 }
 
 void textcolor(int color)
