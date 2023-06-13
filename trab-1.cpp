@@ -11,6 +11,7 @@ int mat[9999][9999], lines, columns;
 void init_array();
 void init_menu();
 int navegate_menu(int start, int end, int p);
+void swapRowForLine();
 void swapRowForColumn();
 void close();
 void textcolor(int color);
@@ -69,9 +70,10 @@ void init_menu()
 	        case 0:
 	            break;
 	        case 1:
-	        	swapRowForColumn();
+	        	swapRowForLine();
 	            break;
 	        case 2:
+	        	swapRowForColumn();
 	            break;
 	        case 3:
 	            break;
@@ -131,7 +133,7 @@ int navegate_menu(int start, int end, int p)
     }while(input != 13);
 }
 
-void swapRowForColumn()
+void swapRowForLine()
 {
 	int x, y;
 
@@ -152,13 +154,34 @@ void swapRowForColumn()
 	return;
 }
 
+void swapRowForColumn()
+{
+	int x, y;
+
+	system("cls");
+
+	gotoxy(30, 8); printf("Digite a coluna a ser trocada: ");
+	scanf("%d", &x);
+	gotoxy(30, 10); printf("Digite a coluna a ser trocada: ");
+	scanf("%d", &y);
+
+	int aux;
+	for(int i = 0; i < lines; i ++) {
+		aux = mat[i][x];
+		mat[i][x] = mat[i][y];
+		mat[i][y] = aux;
+	}
+
+	return;
+}
+
 void close()
 {
 	system("cls");
 
 	cursor(0);
 
-	gotoxy(45, 15); printf("Obrigado por utilizar nosso programa!");
+	gotoxy(42, 15); printf("Obrigado por utilizar nosso programa!");
 	
 	textcolor(0); gotoxy(80, 34);
 	
