@@ -8,13 +8,14 @@
 
 int mat[9999][9999], order;
 
-void init_array();
-void init_menu();
-int navegate_menu(int start, int end, int p);
+void initArray();
+void initMenu();
+int navegateMenu(int start, int end, int p);
+void showMat();
 void swapRowForLine();
 void swapRowForColumn();
 void swapPrimaryForSecondary();
-void verify_symmetric();
+void verifySymmetric();
 void close();
 void loading();
 void textcolor(int color);
@@ -24,14 +25,14 @@ void cursor (int x);
 int main() {
 	setlocale(LC_ALL, "Portuguese");
 
-	init_array();
+	initArray();
 
-    init_menu();
+    initMenu();
 
     return 0;
 }
 
-void init_array()
+void initArray()
 {
 	gotoxy(30, 8); printf("Digite qual ordem sua matriz deve ter: ");
 	scanf("%d", &order);
@@ -46,7 +47,7 @@ void init_array()
 	}
 }
 
-void init_menu()
+void initMenu()
 {
 	int option;
 
@@ -63,13 +64,13 @@ void init_menu()
 	    gotoxy(30, 22); printf("Verificar se uma matriz � matriz de permuta��o");
 	    gotoxy(30, 24); printf("Sair");
 
-		option = navegate_menu(8, 24, 28);
+		option = navegateMenu(8, 24, 28);
 	
 		cursor(1);
 
 	    switch(option) {
 	        case 0:
-                 show_mat();
+                 showMat();
 	            break;
 	        case 1:
 	        	swapRowForLine();
@@ -81,7 +82,7 @@ void init_menu()
 	        	swapPrimaryForSecondary();
 	            break;
 	        case 4:
-	        	verify_symmetric();
+	        	verifySymmetric();
 	            break;
 	        case 5:
 	            break;
@@ -100,7 +101,7 @@ void init_menu()
     
 }
 
-int navegate_menu(int start, int end, int p)
+int navegateMenu(int start, int end, int p)
 {
     cursor(0);
 
@@ -141,7 +142,7 @@ int navegate_menu(int start, int end, int p)
     } while (input != 13);
 }
 
-void show_mat()
+void showMat()
 {
     system("cls");
 
@@ -232,9 +233,9 @@ void swapPrimaryForSecondary()
 	return;
 }
 
-int is_symmetric (int mat[][9999], int lines, int columns) {
-	for (int i = 0; i < lines; i++) {
-        for (int j = 0; j < columns; j++) {
+int isSymmetric (int mat[][9999]) {
+	for (int i = 0; i < order; i++) {
+        for (int j = 0; j < order; j++) {
             if (mat[i][j] != mat[j][i]) {
                 return 0;
             } 
@@ -244,9 +245,9 @@ int is_symmetric (int mat[][9999], int lines, int columns) {
     return 1;
 }
 
-void verify_symmetric() 
+void verifySymmetric() 
 {
-	int symmetric = is_symmetric(mat, lines, columns);
+	int symmetric = isSymmetric(mat);
 	
 	system("cls");
 
