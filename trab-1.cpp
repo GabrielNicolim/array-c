@@ -16,6 +16,8 @@ void swapRowForLine();
 void swapRowForColumn();
 void swapPrimaryForSecondary();
 void verifySymmetric();
+int isMagicSquare();
+void verifyMagicSquare();
 void close();
 void loading();
 void textcolor(int color);
@@ -85,6 +87,7 @@ void initMenu()
 	        	verifySymmetric();
 	            break;
 	        case 5:
+	        	verifyMagicSquare();
 	            break;
 	        case 6:
 	            break;
@@ -233,7 +236,7 @@ void swapPrimaryForSecondary()
 	return;
 }
 
-int isSymmetric (int mat[][9999]) {
+int isSymmetric () {
 	for (int i = 0; i < order; i++) {
         for (int j = 0; j < order; j++) {
             if (mat[i][j] != mat[j][i]) {
@@ -247,7 +250,7 @@ int isSymmetric (int mat[][9999]) {
 
 void verifySymmetric() 
 {
-	int symmetric = isSymmetric(mat);
+	int symmetric = isSymmetric();
 	
 	system("cls");
 
@@ -265,6 +268,75 @@ void verifySymmetric()
         input = getch();
     } while (input != 13);
 
+    return;
+}
+
+int isMagicSquare () {
+	int sum = 0, base = 0;  
+
+	for(int i = 0; i < order; i++) {
+		base += mat[i][i];
+	}
+	
+	sum = 0;
+	int line = 0, column = (order - 1);
+
+	for(int i = 0; i < order; i++) {
+		column--;
+		line++;
+		
+		sum += mat[line][column];
+	}
+	
+	if(base != sum) {
+		return 0;
+	}
+
+	for (int i = 0; i < order; i++) {
+		sum = 0;
+
+        for (int j = 0; j < order; j++) {
+            sum += mat[i][j];
+        }
+        
+        if(base != sum) {
+			return 0;
+		}
+		
+		sum = 0;
+
+		for (int j = 0; j < order; j++) {
+            sum += mat[j][i];
+        }
+        
+        if(base != sum) {
+			return 0;
+		}
+    }
+    
+    return 1;
+}
+
+void verifyMagicSquare()
+{
+	system("cls");
+
+	int isMagic = isMagicSquare();
+
+    if (isMagic) {
+        gotoxy(30, 8); printf("A matriz é um quadrado mágico.");
+    } else {
+        gotoxy(30, 8); printf("A matriz não é um quadrado mágico.");
+    }
+
+    int input;
+	cursor(0);
+	
+	do {
+        fflush(stdin);
+        input = getch();
+    } while (input != 13);
+    
     return;
 }
 
