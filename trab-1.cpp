@@ -43,6 +43,31 @@ void init_array()
 	}
 }
 
+void show_mat() {
+    system("cls");
+
+    for (int i = 0; i < lines; i++) {
+        gotoxy(30, 8 + i); 
+        printf("| ");
+        for (int j = 0; j < columns; j++) {
+            printf("%d ", mat[i][j]);
+        }
+        printf("|\n");
+    }
+
+    int input;
+
+    cursor(0);
+
+    do {
+    	fflush(stdin);
+    	
+        input = getchar();
+    } while (input != 13);
+
+    return;
+}
+
 void init_menu()
 {
 	system("cls");
@@ -64,6 +89,7 @@ void init_menu()
 	
 	    switch(option) {
 	        case 0:
+                 show_mat();
 	            break;
 	        case 1:
 	            break;
@@ -95,7 +121,7 @@ int navegate_menu(int start, int end, int p)
     int aux = start;
     int input;
 
-    do{
+    do {
         gotoxy(p,aux); printf("%c", 62); //posição inicial da seta
 
         fflush(stdin);
@@ -124,7 +150,7 @@ int navegate_menu(int start, int end, int p)
                 return (aux - start)/2; // Retorna o valor da opção seleciona => inicia em 0
                 break;
         }
-    }while(input != 13);
+    } while(input != 13);
 }
 
 void close() // Finaliza a execução do programa
