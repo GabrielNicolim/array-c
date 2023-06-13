@@ -6,7 +6,7 @@
 #include <string.h>
 #include <locale.h>
 
-int mat[9999][9999], lines, columns;
+int mat[9999][9999], order;
 
 void init_array();
 void init_menu();
@@ -34,14 +34,12 @@ int main() {
 void init_array()
 {
 	gotoxy(30, 8); printf("Digite qual ordem sua matriz deve ter: ");
-	scanf("%d", &lines);
+	scanf("%d", &order);
 	
-	columns = lines;
-
-	for(int i = 0; i < lines; i++) {
+	for(int i = 0; i < order; i++) {
 		system("cls");
 
-		for(int j = 0; j < columns; j++) {
+		for(int j = 0; j < order; j++) {
 			gotoxy(30, 8 + (j * 2)); printf("Elemento [%d][%d]: ", i, j);
 			scanf("%d", &mat[i][j]);
 		}
@@ -144,10 +142,10 @@ void show_mat()
 {
     system("cls");
 
-    for (int i = 0; i < lines; i++) {
+    for (int i = 0; i < order; i++) {
         gotoxy(30, 8 + i); 
         printf("| ");
-        for (int j = 0; j < columns; j++) {
+        for (int j = 0; j < order; j++) {
             printf("%d ", mat[i][j]);
         }
         printf("|\n");
@@ -169,16 +167,18 @@ void show_mat()
 void swapRowForLine()
 {
 	int x, y;
-
-	system("cls");
-
-	gotoxy(30, 8); printf("Digite a linha a ser trocada: ");
-	scanf("%d", &x);
-	gotoxy(30, 10); printf("Digite a linha a ser trocada: ");
-	scanf("%d", &y);
+	
+	do {
+		system("cls");
+	
+		gotoxy(30, 8); printf("Digite a linha a ser trocada: ");
+		scanf("%d", &x);
+		gotoxy(30, 10); printf("Digite a linha a ser trocada: ");
+		scanf("%d", &y);
+	} while(x >= order || y >= order);
 
 	int aux;
-	for(int i = 0; i < columns; i ++) {
+	for(int i = 0; i < order; i ++) {
 		aux = mat[x][i];
 		mat[x][i] = mat[y][i];
 		mat[y][i] = aux;
@@ -191,15 +191,18 @@ void swapRowForColumn()
 {
 	int x, y;
 
-	system("cls");
+	do {
+		system("cls");
 
-	gotoxy(30, 8); printf("Digite a coluna a ser trocada: ");
-	scanf("%d", &x);
-	gotoxy(30, 10); printf("Digite a coluna a ser trocada: ");
-	scanf("%d", &y);
+		gotoxy(30, 8); printf("Digite a coluna a ser trocada: ");
+		scanf("%d", &x);
+		gotoxy(30, 10); printf("Digite a coluna a ser trocada: ");
+		scanf("%d", &y);	
+	} while(x >= order || y >= order);
+
 
 	int aux;
-	for(int i = 0; i < lines; i ++) {
+	for(int i = 0; i < order; i ++) {
 		aux = mat[i][x];
 		mat[i][x] = mat[i][y];
 		mat[i][y] = aux;
@@ -210,7 +213,16 @@ void swapRowForColumn()
 
 void swapPrimaryForSecondary()
 {
-	int aux;
+	int aux, line = 0, column = (order - 1);  
+
+	for(int i = 0; i < order; i++) {
+		aux = mat[i][i];
+		mat[i][i] = mat[line][column];
+		mat[line][column] = aux;
+		
+		column--;
+		line++;
+	}
 
 	loading();
 
