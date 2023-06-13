@@ -6,6 +6,9 @@
 #include <string.h>
 #include <locale.h>
 
+int mat[9999][9999], lines, columns;
+
+void init_array();
 void init_menu();
 int navegate_menu(int start, int end, int p);
 void close();
@@ -16,13 +19,34 @@ void cursor (int x);
 int main() {
 	setlocale(LC_ALL, "Portuguese");
 
+	init_array();
+
     init_menu();
 
     return 0;
 }
 
+void init_array()
+{
+	gotoxy(30, 8); printf("Digite quantas linhas sua matriz deve ter: ");
+	scanf("%d", &lines);
+	gotoxy(30, 9); printf("Digite quantas colunas sua matriz deve ter: ");
+	scanf("%d", &columns);
+
+	for(int i = 0; i < lines; i++) {
+		system("cls");
+
+		for(int j = 0; j < columns; j++) {
+			gotoxy(30, 8 + j); printf("Elemento [%d][%d]: ", i, j);
+			scanf("%d", &mat[i][j]);
+		}
+	}
+}
+
 void init_menu()
 {
+	system("cls");
+
     gotoxy(30, 8);  printf("Mostrar os elementos");
     gotoxy(30, 10); printf("Trocar os elementos da linha X pela linha Y");
     gotoxy(30, 12); printf("Trocar os elementos da coluna X pela coluna Y");
@@ -33,29 +57,33 @@ void init_menu()
     gotoxy(30, 22); printf("Verificar se uma matriz é matriz de permutação");
     gotoxy(30, 24); printf("Sair");
 
-    int option = navegate_menu(8, 24, 28);
+	int option;
 
-    switch(option){
-        case 0:
-            break;
-        case 1:
-            break;
-        case 2:
-            break;
-        case 3:
-            break;
-        case 4:
-            break;
-        case 5:
-            break;
-        case 6:
-            break;
-        case 7:
-            break;
-        case 8:
-        	close();
-            break;
-    }
+	do {
+		option = navegate_menu(8, 24, 28);
+	
+	    switch(option) {
+	        case 0:
+	            break;
+	        case 1:
+	            break;
+	        case 2:
+	            break;
+	        case 3:
+	            break;
+	        case 4:
+	            break;
+	        case 5:
+	            break;
+	        case 6:
+	            break;
+	        case 7:
+	            break;
+	        case 8:
+	        	close();
+	            break;
+	    }	
+	} while(option != 8);
 
     return;
 }
