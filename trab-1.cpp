@@ -281,17 +281,16 @@ int isMagicSquare () {
 	for(int i = 0; i < order; i++) {
 		base += mat[i][i];
 	}
-	
-	sum = 0;
+
 	int line = 0, column = (order - 1);
 
 	for(int i = 0; i < order; i++) {
+		sum += mat[line][column];
+
 		column--;
 		line++;
-		
-		sum += mat[line][column];
 	}
-	
+
 	if(base != sum) {
 		return 0;
 	}
@@ -306,7 +305,9 @@ int isMagicSquare () {
         if(base != sum) {
 			return 0;
 		}
-		
+    }
+    
+    for (int i = 0; i < order; i++) {
 		sum = 0;
 
 		for (int j = 0; j < order; j++) {
@@ -317,7 +318,7 @@ int isMagicSquare () {
 			return 0;
 		}
     }
-    
+
     return 1;
 }
 
@@ -335,12 +336,12 @@ void verifyMagicSquare()
 
     int input;
 	cursor(0);
-	
+
 	do {
         fflush(stdin);
         input = getch();
     } while (input != 13);
-    
+
     return;
 }
 
