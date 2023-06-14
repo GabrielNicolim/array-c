@@ -21,6 +21,8 @@ int isMagicSquare();
 void verifyMagicSquare();
 int isLatino();
 void verifyLatino();
+int isPermutation();
+void verifyPermutation();
 void close();
 void loading();
 void textcolor(int color);
@@ -96,6 +98,7 @@ void initMenu()
 	        	verifyLatino();
 	            break;
 	        case 7:
+	        	verifyPermutation();
 	            break;
 	        case 8:
 	        	close();
@@ -387,9 +390,60 @@ void verifyLatino()
 	system("cls");
 
     if (isLatino()) {
-        gotoxy(30, 8); printf("A matriz ï¿½ um quadrado latino.");
+        gotoxy(30, 8); printf("A matriz é um quadrado latino.");
     } else {
-        gotoxy(30, 8); printf("A matriz nï¿½o ï¿½ um quadrado latino.");
+        gotoxy(30, 8); printf("A matriz não é um quadrado latino.");
+    }
+
+    int input;
+    cursor(0);
+
+    do {
+        fflush(stdin);
+        input = getch();
+    } while (input != 13);
+
+    return;
+}
+
+int isPermutation() {
+
+    int nums[9999] = {0};
+
+    for (int i = 0; i < order; i++) {
+        for (int j = 0; j < order; j++) {
+            int num = mat[i][j];
+            
+            if (num != 0 && num != 1) {
+                return 0;
+            }
+            
+            if (num == 1) {
+                if (nums[i] == 1) {
+                    return 0;
+                }
+                nums[i] = 1;
+            }
+        }
+    }
+
+    for (int i = 0; i < order; i++) {
+        if (nums[i] != 1) {
+            return 0;
+        }
+    }
+
+    return 1;
+}
+
+void verifyPermutation()
+{
+	system("cls");
+
+    if (isLatino()) {
+        gotoxy(30, 8); printf("A matriz é uma matriz de permutação.");
+    } else {
+        gotoxy(30, 8); printf("A matriz não é uma matriz de permutação.");
     }
 
     int input;
