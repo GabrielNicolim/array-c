@@ -191,6 +191,8 @@ void swapRowForLine()
 		mat[y][i] = aux;
 	}
 
+	loading();
+
 	return;
 }
 
@@ -214,6 +216,8 @@ void swapRowForColumn()
 		mat[i][x] = mat[i][y];
 		mat[i][y] = aux;
 	}
+
+	loading();
 
 	return;
 }
