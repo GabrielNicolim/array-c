@@ -15,9 +15,10 @@ void showMat();
 void swapRowForLine();
 void swapRowForColumn();
 void swapPrimaryForSecondary();
+int isSymmetric();
 void verifySymmetric();
-int isMagicSquare();
-void verifyMagicSquare();
+int isLatino();
+void verifyLatino();
 void close();
 void loading();
 void textcolor(int color);
@@ -87,9 +88,9 @@ void initMenu()
 	        	verifySymmetric();
 	            break;
 	        case 5:
-	        	verifyMagicSquare();
 	            break;
 	        case 6:
+	        	verifyLatino();
 	            break;
 	        case 7:
 	            break;
@@ -191,8 +192,6 @@ void swapRowForLine()
 		mat[y][i] = aux;
 	}
 
-	loading();
-
 	return;
 }
 
@@ -216,8 +215,6 @@ void swapRowForColumn()
 		mat[i][x] = mat[i][y];
 		mat[i][y] = aux;
 	}
-
-	loading();
 
 	return;
 }
@@ -254,7 +251,7 @@ int isSymmetric () {
 
 void verifySymmetric() 
 {
-	int symmetric = isSymmetric();
+	int symmetric = isSymmetric(mat);
 	
 	system("cls");
 
@@ -298,8 +295,14 @@ int isMagicSquare () {
 	for (int i = 0; i < order; i++) {
 		sum = 0;
 
+int isLatino() {
+	for (int i = 0; i < order; i++) { 
         for (int j = 0; j < order; j++) {
-            sum += mat[i][j];
+            for (int k = j + 1; k < order; k++) {
+                if (mat[i][j] == mat[i][k]) {
+                    return 0;
+                }
+            }
         }
         
         if(base != sum) {
@@ -312,32 +315,37 @@ int isMagicSquare () {
 
 		for (int j = 0; j < order; j++) {
             sum += mat[j][i];
+    }
+
+    for (int i = 0; i < order; i++) {
+        for (int j = 0; j < order; j++) {
+            for (int k = j + 1; k < order; k++) {
+                if (mat[j][i] == mat[k][i]) {
+                    return 0;
+                }
+            }
         }
-        
-        if(base != sum) {
-			return 0;
-		}
     }
 
     return 1;
 }
 
-void verifyMagicSquare()
+void verifyLatino() 
 {
+	int latino = isLatino(mat, order);
+	
 	system("cls");
 
-	int isMagic = isMagicSquare();
-
-    if (isMagic) {
-        gotoxy(30, 8); printf("A matriz é um quadrado mágico.");
+    if (latino == 1) {
+        gotoxy(30, 8); printf("A matriz ï¿½ um quadrado latino.");
     } else {
-        gotoxy(30, 8); printf("A matriz não é um quadrado mágico.");
+        gotoxy(30, 8); printf("A matriz nï¿½o ï¿½ um quadrado latino.");
     }
 
     int input;
-	cursor(0);
+    cursor(0);
 
-	do {
+    do {
         fflush(stdin);
         input = getch();
     } while (input != 13);
