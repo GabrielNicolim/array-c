@@ -15,7 +15,10 @@ void showMat();
 void swapRowForLine();
 void swapRowForColumn();
 void swapPrimaryForSecondary();
+int isSymmetric();
 void verifySymmetric();
+int isLatino();
+void verifyLatino();
 void close();
 void loading();
 void textcolor(int color);
@@ -87,6 +90,7 @@ void initMenu()
 	        case 5:
 	            break;
 	        case 6:
+	        	verifyLatino();
 	            break;
 	        case 7:
 	            break;
@@ -233,7 +237,7 @@ void swapPrimaryForSecondary()
 	return;
 }
 
-int isSymmetric (int mat[][9999]) {
+int isSymmetric () {
 	for (int i = 0; i < order; i++) {
         for (int j = 0; j < order; j++) {
             if (mat[i][j] != mat[j][i]) {
@@ -255,6 +259,55 @@ void verifySymmetric()
         gotoxy(30, 8); printf("A matriz ï¿½ simï¿½trica.");
     } else {
         gotoxy(30, 8); printf("A matriz nï¿½o ï¿½ simï¿½trica.");
+    }
+
+    int input;
+    cursor(0);
+
+    do {
+        fflush(stdin);
+        input = getch();
+    } while (input != 13);
+
+    return;
+}
+
+int isLatino() {
+	// Verifica linha a linha
+	for (int i = 0; i < order; i++) { 
+        for (int j = 0; j < order; j++) {
+            for (int k = j + 1; k < order; k++) {
+                if (mat[i][j] == mat[i][k]) {
+                    return 0;
+                }
+            }
+        }
+    }
+    
+    // Verifica coluna a coluna
+    for (int i = 0; i < order; i++) {
+        for (int j = 0; j < order; j++) {
+            for (int k = j + 1; k < order; k++) {
+                if (mat[j][i] == mat[k][i]) {
+                    return 0;
+                }
+            }
+        }
+    }
+    
+    return 1;
+}
+
+void verifyLatino() 
+{
+	int latino = isLatino(mat, order);
+	
+	system("cls");
+
+    if (latino == 1) {
+        gotoxy(30, 8); printf("A matriz é um quadrado latino.");
+    } else {
+        gotoxy(30, 8); printf("A matriz não é um quadrado latino.");
     }
 
     int input;
