@@ -17,6 +17,8 @@ void swapRowForColumn();
 void swapPrimaryForSecondary();
 int isSymmetric();
 void verifySymmetric();
+int isMagicSquare();
+void verifyMagicSquare();
 int isLatino();
 void verifyLatino();
 void close();
@@ -88,6 +90,7 @@ void initMenu()
 	        	verifySymmetric();
 	            break;
 	        case 5:
+	        	verifyMagicSquare();
 	            break;
 	        case 6:
 	        	verifyLatino();
@@ -251,7 +254,7 @@ int isSymmetric () {
 
 void verifySymmetric() 
 {
-	int symmetric = isSymmetric(mat);
+	int symmetric = isSymmetric();
 	
 	system("cls");
 
@@ -294,8 +297,56 @@ int isMagicSquare () {
 
 	for (int i = 0; i < order; i++) {
 		sum = 0;
+		
+		for (int j = 0; j < order; j++) {
+            sum += mat[i][j];
+        }
+        
+        if(base != sum) {
+			return 0;
+		}
+	}
+	
+	for (int i = 0; i < order; i++) {
+		sum = 0;
+		
+		for (int j = 0; j < order; j++) {
+            sum += mat[j][i];
+        }
+        
+        if(base != sum) {
+			return 0;
+		}
+	}
+	
+	return 1;
+}
+
+void verifyMagicSquare()
+{	
+	system("cls");
+
+    if (isMagicSquare()) {
+        gotoxy(30, 8); printf("A matriz � um quadrado magico.");
+    } else {
+        gotoxy(30, 8); printf("A matriz n�o � um quadrado magico.");
+    }
+
+    int input;
+
+    cursor(0);
+
+    do {
+        fflush(stdin);
+        input = getch();
+    } while (input != 13);
+
+    return;
+}
 
 int isLatino() {
+	int sum = 0, base = 0;
+
 	for (int i = 0; i < order; i++) { 
         for (int j = 0; j < order; j++) {
             for (int k = j + 1; k < order; k++) {
@@ -315,6 +366,7 @@ int isLatino() {
 
 		for (int j = 0; j < order; j++) {
             sum += mat[j][i];
+    	}
     }
 
     for (int i = 0; i < order; i++) {
@@ -330,13 +382,11 @@ int isLatino() {
     return 1;
 }
 
-void verifyLatino() 
+void verifyLatino()
 {
-	int latino = isLatino(mat, order);
-	
 	system("cls");
 
-    if (latino == 1) {
+    if (isLatino()) {
         gotoxy(30, 8); printf("A matriz � um quadrado latino.");
     } else {
         gotoxy(30, 8); printf("A matriz n�o � um quadrado latino.");
