@@ -64,11 +64,11 @@ void initMenu()
 	    gotoxy(30, 8);  printf("Mostrar os elementos");
 	    gotoxy(30, 10); printf("Trocar os elementos da linha X pela linha Y");
 	    gotoxy(30, 12); printf("Trocar os elementos da coluna X pela coluna Y");
-	    gotoxy(30, 14); printf("Troque os elementos da diagonal principal com a diagonal secundï¿½ria");
-	    gotoxy(30, 16); printf("Verificar se uma matriz ï¿½ simï¿½trica");
-	    gotoxy(30, 18); printf("Verificar se uma matriz ï¿½ um quadrado mï¿½gico");
-	    gotoxy(30, 20); printf("Verificar se uma matriz ï¿½ quadrado latino");
-	    gotoxy(30, 22); printf("Verificar se uma matriz ï¿½ matriz de permutaï¿½ï¿½o");
+	    gotoxy(30, 14); printf("Trocar os elementos da diagonal principal pelos da diagonal secundária");
+	    gotoxy(30, 16); printf("Verificar se a matriz é simétrica");
+	    gotoxy(30, 18); printf("Verificar se a matriz é um quadrado mágico");
+	    gotoxy(30, 20); printf("Verificar se a matriz é quadrado latino");
+	    gotoxy(30, 22); printf("Verificar se a matriz é matriz de permutação");
 	    gotoxy(30, 24); printf("Sair");
 
 		option = navegateMenu(8, 24, 28);
@@ -262,9 +262,9 @@ void verifySymmetric()
 	system("cls");
 
     if (symmetric == 1) {
-        gotoxy(30, 8); printf("A matriz ï¿½ simï¿½trica.");
+        gotoxy(30, 8); printf("A matriz é simétrica.");
     } else {
-        gotoxy(30, 8); printf("A matriz nï¿½o ï¿½ simï¿½trica.");
+        gotoxy(30, 8); printf("A matriz não é simétrica.");
     }
 
     int input;
@@ -330,9 +330,9 @@ void verifyMagicSquare()
 	system("cls");
 
     if (isMagicSquare()) {
-        gotoxy(30, 8); printf("A matriz ï¿½ um quadrado magico.");
+        gotoxy(30, 8); printf("A matriz é um quadrado mágico.");
     } else {
-        gotoxy(30, 8); printf("A matriz nï¿½o ï¿½ um quadrado magico.");
+        gotoxy(30, 8); printf("A matriz não é um quadrado mágico.");
     }
 
     int input;
