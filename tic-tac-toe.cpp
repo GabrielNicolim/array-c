@@ -6,10 +6,82 @@
 #include <string.h>
 #include <locale.h>
 
+#define ORDER 3
+
+void someoneWon(int board[ORDER][ORDER]);
+void showBoard(int board[ORDER][ORDER]);
+void loading();
+void close();
+void textcolor(int color);
+void gotoxy(int x, int y);
+void cursor (int x);
+
 int main() {
 	setlocale(LC_ALL, "Portuguese");
 
+	int board[ORDER][ORDER] = {
+		{0, 0, 0},
+		{0, 0, 0},
+		{0, 0, 0},
+	};
+
+	loading();
+
+	do {
+		showBoard(board)
+		
+		// Obter jogada
+		// Validar jogada
+	} while(! someoneWon(board)); // Retornar se partida acabou e printar mensagem de quem venceu 
+
+
+	close();
+
     return 0;
+}
+
+void someoneWon(int board[ORDER][ORDER])
+{
+	
+}
+
+void showBoard(int board[ORDER][ORDER])
+{
+	system("cls");
+
+    for (int i = 0; i < ORDER; i++) {
+        gotoxy(57, 8 + i); 
+        printf("| ");
+        for (int j = 0; j < ORDER; j++) {
+        	if(board[i][j] == 1) {
+        		printf("X ");
+
+        		continue;
+			}
+			
+			if(board[i][j] == -1) {
+				printf("O ");
+
+        		continue;
+			}
+
+            printf("_ ");
+        }
+        
+        printf("|\n");
+    }
+
+    cursor(0);
+
+    int input;
+
+    do {
+    	fflush(stdin);
+    	
+        input = getch();
+    } while (input != 13);
+
+    return;
 }
 
 void loading()
@@ -23,6 +95,19 @@ void loading()
 		printf(". ");
 		Sleep(500);
 	}
+}
+
+void close()
+{
+	system("cls");
+
+	cursor(0);
+
+	gotoxy(43, 12); printf("Obrigado por utilizar nosso programa!");
+	
+	textcolor(0); gotoxy(80, 34);
+	
+	exit(1);
 }
 
 void textcolor(int color)
