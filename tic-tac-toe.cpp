@@ -8,7 +8,8 @@
 
 #define ORDER 3
 
-void someoneWon(int board[ORDER][ORDER]);
+void * getInput(int board[ORDER][ORDER], int * playerNumber);
+int someoneWon(int board[ORDER][ORDER]);
 void showBoard(int board[ORDER][ORDER]);
 void loading();
 void close();
@@ -27,10 +28,13 @@ int main() {
 
 	loading();
 
+	int playerNumber = 1;
+
 	do {
-		showBoard(board)
+		showBoard(board);
 		
-		// Obter jogada
+		getInput(board, &playerNumber);
+
 		// Validar jogada
 	} while(! someoneWon(board)); // Retornar se partida acabou e printar mensagem de quem venceu 
 
@@ -40,9 +44,30 @@ int main() {
     return 0;
 }
 
-void someoneWon(int board[ORDER][ORDER])
+void * getInput(int board[ORDER][ORDER], int * playerNumber)
 {
-	
+	cursor(1);
+
+	gotoxy(43, 20); printf("%s: ", *playerNumber == 1 ? "Jogador [1]" : "Jogador [2]");
+
+	if(*playerNumber == 1) {
+		*playerNumber = -1;	
+	} else {
+		*playerNumber = 1;
+	}
+
+	int input;
+
+    do {
+    	fflush(stdin);
+    	
+        input = getch();
+    } while (input != 13);
+}
+
+int someoneWon(int board[ORDER][ORDER])
+{
+	return 0;
 }
 
 void showBoard(int board[ORDER][ORDER])
@@ -72,14 +97,6 @@ void showBoard(int board[ORDER][ORDER])
     }
 
     cursor(0);
-
-    int input;
-
-    do {
-    	fflush(stdin);
-    	
-        input = getch();
-    } while (input != 13);
 
     return;
 }
