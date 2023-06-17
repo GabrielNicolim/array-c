@@ -28,16 +28,15 @@ int main() {
 
 	loading();
 
-	int playerNumber = 1;
+	int playerNumber = 1, howWon = 0;
 
 	do {
 		showBoard(board);
 		
 		getInput(board, &playerNumber);
-
-		// Validar jogada
-	} while(! someoneWon(board)); // Retornar se partida acabou e printar mensagem de quem venceu 
-
+		
+		howWon = someoneWon(board);
+	} while(howWon != 1 && howWon != -1);
 
 	close();
 
@@ -97,7 +96,52 @@ void * getInput(int board[ORDER][ORDER], int * playerNumber)
 
 int someoneWon(int board[ORDER][ORDER])
 {
-	return 0;
+	int howWon = 0, line = 0, column = ORDER,  sumDp = 0, sumDs = 0;
+
+	for(int i = 0; i < ORDER; i++) {
+		int sumLine = 0, sumColumn = 0;
+
+		sumDp += board[i][i];
+		sumDs += board[line][column];
+
+		line++;
+		column--;
+
+		for(int j = 0; j < ORDER; j++) {
+			sumLine += board[i][j];
+			sumColumn += board[j][i];
+		}
+		
+		if(sumLine == 3 || sumColumn == 3 || sumDp == 3 || sumDs == 3) {
+			howWon = 1;
+			
+			break;
+		}
+
+		if(sumLine == -3 || sumColumn == -3 || sumDp == -3 || sumDs == -3) {
+			howWon = -1;
+
+			break;
+		}
+	}
+
+	if(howWon == 1 || howWon == -1) {
+		system("cls");
+		
+		cursor(0);
+
+	    gotoxy(53, 12); printf("O %s venceu!", howWon == 1 ? "Jogador [1]" : "Jogador [2]");
+	
+		int input;
+		
+		do {
+			fflush(stdin);
+			
+			input = getch();		
+		} while(input != 13);
+	}
+
+	return howWon;
 }
 
 void showBoard(int board[ORDER][ORDER])
