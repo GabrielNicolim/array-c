@@ -102,7 +102,7 @@ int someoneWon(int board[ORDER][ORDER])
 		int sumLine = 0, sumColumn = 0;
 
 		sumDp += board[i][i];
-		sumDs += board[line][column];
+		sumDs += board[i][ORDER - 1 - i];
 
 		line++;
 		column--;
