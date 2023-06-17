@@ -48,21 +48,34 @@ void * getInput(int board[ORDER][ORDER], int * playerNumber)
 {
 	cursor(1);
 
-	gotoxy(43, 20); printf("%s: ", *playerNumber == 1 ? "Jogador [1]" : "Jogador [2]");
-
-	if(*playerNumber == 1) {
-		*playerNumber = -1;	
-	} else {
-		*playerNumber = 1;
-	}
-
-	int input;
+	int inputX, inputY;
 
     do {
-    	fflush(stdin);
-    	
-        input = getch();
-    } while (input != 13);
+    	for(int i = 0; i < 5; i++) {
+    		gotoxy(73 + i, 18); printf(" ");
+		}
+
+		for(int i = 0; i < 5; i++) {
+    		gotoxy(73 + i, 20); printf(" ");
+		}
+
+    	gotoxy(43, 18); printf("%s - Eixo X (1 - 3): ", * playerNumber == 1 ? "Jogador [1]" : "Jogador [2]");
+    	scanf("%d", &inputX);
+
+		gotoxy(43, 20); printf("%s - Eixo Y (1 - 3): ", * playerNumber == 1 ? "Jogador [1]" : "Jogador [2]");
+		scanf("%d", &inputY);
+		
+		if((inputX < 1 || inputX > 3) || (inputY < 1 || inputY > 3)) {
+			gotoxy(43, 22); printf("Digite valores entre 1 e 3");
+		}
+    } while ((inputX < 1 || inputX > 3) || (inputY < 1 || inputY > 3));
+
+
+	if(* playerNumber == 1) {
+		* playerNumber = -1;	
+	} else {
+		* playerNumber = 1;
+	}
 }
 
 int someoneWon(int board[ORDER][ORDER])
