@@ -48,28 +48,45 @@ void * getInput(int board[ORDER][ORDER], int * playerNumber)
 {
 	cursor(1);
 
-	int inputX, inputY;
+	int column, line;
 
     do {
-    	for(int i = 0; i < 5; i++) {
-    		gotoxy(73 + i, 18); printf(" ");
+    	for(int i = 0; i < 10; i++) {
+    		gotoxy(72 + i, 18); printf(" ");
 		}
 
-		for(int i = 0; i < 5; i++) {
-    		gotoxy(73 + i, 20); printf(" ");
+		for(int i = 0; i < 10; i++) {
+    		gotoxy(72 + i, 20); printf(" ");
 		}
 
-    	gotoxy(43, 18); printf("%s - Eixo X (1 - 3): ", * playerNumber == 1 ? "Jogador [1]" : "Jogador [2]");
-    	scanf("%d", &inputX);
+    	gotoxy(43, 18); printf("%s - Linha (1 - 3): ", * playerNumber == 1 ? "Jogador [1]" : "Jogador [2]");
+    	scanf("%d", &line);
 
-		gotoxy(43, 20); printf("%s - Eixo Y (1 - 3): ", * playerNumber == 1 ? "Jogador [1]" : "Jogador [2]");
-		scanf("%d", &inputY);
+		gotoxy(43, 20); printf("%s - Coluna (1 - 3): ", * playerNumber == 1 ? "Jogador [1]" : "Jogador [2]");
+		scanf("%d", &column);
 		
-		if((inputX < 1 || inputX > 3) || (inputY < 1 || inputY > 3)) {
-			gotoxy(43, 22); printf("Digite valores entre 1 e 3");
-		}
-    } while ((inputX < 1 || inputX > 3) || (inputY < 1 || inputY > 3));
+		if((line < 1 || line > 3) || (column < 1 || column > 3)) {
+			for(int i = 0; i < 40; i++) {
+	    		gotoxy(43 + i, 22); printf(" ");
+			}
 
+			gotoxy(43, 22); printf("Digite valores entre 1 e 3");
+			
+			continue;
+		}
+		
+		if(board[line - 1][column - 1] != 0) {
+			for(int i = 0; i < 40; i++) {
+	    		gotoxy(43 + i, 22); printf(" ");
+			}
+
+			gotoxy(43, 22); printf("Escolha uma posição não ocupada");
+
+			continue;
+		}
+    } while (((line < 1 || line > 3) || (column < 1 || column > 3)) || (board[line - 1][column - 1] != 0));
+
+	board[line - 1][column - 1] = * playerNumber;
 
 	if(* playerNumber == 1) {
 		* playerNumber = -1;	
